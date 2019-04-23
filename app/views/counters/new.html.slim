@@ -2,7 +2,9 @@
 /   counter
 / }
 
-= form_with model: Counter.new(value: 23132) do |form|
+= error_messages_for counter
+
+= form_with model: counter do |form|
   br
   = form.label :value
   br
