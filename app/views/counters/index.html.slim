@@ -1,2 +1,17 @@
-h1
-  | Hello
+= render partial: 'counters/common/action_menu'
+
+h2
+  | Счетчики
+
+= form_tag(counters_path, :method => :get, :id => 'query_form') do
+  = render partial: 'queries/query_form'
+
+- if @query.valid?
+  - if @entries.empty?
+    p.nodata= l(:label_no_data)
+  - else
+    = render_query_totals(@query)
+    = render partial: 'list',
+             locals: { entries: @entries }
+    span.pagination
+      = pagination_links_full @entry_pages, @entry_count

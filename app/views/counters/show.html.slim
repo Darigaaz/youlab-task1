@@ -2,14 +2,20 @@
 /   counter
 / }
 
-div
-  div
-    | Значение
-  div
-    = counter.value
+= render partial: 'counters/common/action_menu'
 
-div
-  div
-    | Дата
-  div
-    = counter.to
+h2
+  | Счетчик
+
+.issue.details
+  .title
+    h3 №#{counter.id}
+  .attributes
+    .splitcontent
+      .splitcontentleft
+        .attribute
+          .label Значение
+          .value= counter.value
+        .attribute
+          .label Дата
+          .value= counter.to

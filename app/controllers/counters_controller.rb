@@ -1,5 +1,17 @@
+# frozen_string_literal: true
+
 class CountersController < ApplicationController
+  helper :queries
+  include QueriesHelper
+
+  helper :counters_column_value
+
   def index
+    retrieve_time_entry_query
+
+    @entry_count = @query.base_scope.count
+    @entry_pages = Paginator.new @entry_count, per_page_option, params['page']
+    @entries = @query.base_scope.offset(@entry_pages.offset).limit(@entry_pages.per_page).to_a
   end
 
   def new
@@ -29,5 +41,9 @@ class CountersController < ApplicationController
     params.
       require(:counter).
       permit(:value, :to)
+  end
+
+  def retrieve_time_entry_query
+    retrieve_query(CountersQuery)
   end
 end

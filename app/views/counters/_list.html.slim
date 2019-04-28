@@ -1,0 +1,23 @@
+= hidden_field_tag 'back_url', url_for(:params => request.query_parameters), :id => nil
+div.autoscroll
+  table.list.issues.odd-even
+    thead
+      tr
+        - @query.inline_columns.each do |column|
+          = column_header(@query, column)
+    tbody
+      - grouped_query_results(@entries, @query) do |entry, group_name, group_count, group_totals|
+        - if group_name
+          - reset_cycle
+          tr.group.open
+            td{colspan = "#{@query.inline_columns.size + 2}"}
+              span.expander{onclick = "toggleRowGroup(this);"}| &nbsp;
+              span.name= group_name
+              - if group_count
+                span.badge.badge-count.count= group_count
+              span.totals= group_totals
+              = link_to_function("#{l(:button_collapse_all)}/#{l(:button_expand_all)}",
+                                 "toggleAllRowGroups(this)", :class => 'toggle-all')
+        tr{id = "counter-#{entry.id}" class = cycle('odd', 'even')}
+          - @query.inline_columns.each do |column|
+            = content_tag('td', column_content(column, entry), :class => column.css_classes)
