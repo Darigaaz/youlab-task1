@@ -5,13 +5,13 @@ class CountersQuery < Query
 
   self.available_columns = [
     QueryColumn.new(:id,
-                    sortable: "#{Counter.table_name}.id",
+                    sortable: %Q(#{Counter.quoted_table_name}."id"),
                     caption: 'ID'),
     QueryColumn.new(:to,
-                    sortable: "#{Counter.table_name}.to",
+                    sortable: %Q(#{Counter.quoted_table_name}."to"),
                     caption: 'Число'),
     QueryColumn.new(:value,
-                    sortable: "#{Counter.table_name}.value",
+                    sortable: %Q(#{Counter.quoted_table_name}."value"),
                     caption: 'Значение')
   ]
 
@@ -44,7 +44,12 @@ class CountersQuery < Query
   end
 
   def base_scope
-    Counter.where(statement)
+    order_option = [group_by_sort_order, (options[:order] || sort_clause)].flatten.reject(&:blank?)
+
+    Counter.
+        order(order_option).
+        joins(joins_for_order_statement(order_option.join(','))).
+        where(statement)
   end
 
   def default_columns_names
