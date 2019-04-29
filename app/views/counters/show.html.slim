@@ -2,7 +2,8 @@
 /   counter
 / }
 
-= render partial: 'counters/common/action_menu'
+= render partial: 'counters/common/action_menu',
+         locals: {counter: counter}
 
 h2
   | Счетчик

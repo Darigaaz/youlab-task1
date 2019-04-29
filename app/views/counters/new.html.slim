@@ -2,18 +2,24 @@
 /   counter
 / }
 
-= error_messages_for counter
+/ = error_messages_for counter
+/ = form_with model: counter do |form|
+/   br
+/   = form.label :value
+/   br
+/   = form.text_field :value
+/
+/   br
+/   = form.label :to
+/   br
+/   = form.date_field :to
+/
+/   br
+/   = form.submit
 
-= form_with model: counter do |form|
-  br
-  = form.label :value
-  br
-  = form.text_field :value
-
-  br
-  = form.label :to
-  br
-  = form.date_field :to
-
-  br
-  = form.submit
+= labelled_form_for counter,
+                    url: counters_path,
+                    html: {multipart: true} do |f|
+  = render partial: 'form',
+           locals: {f: f}
+  = submit_tag l(:button_create)

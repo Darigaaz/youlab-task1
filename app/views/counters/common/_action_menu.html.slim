@@ -1,4 +1,9 @@
 .contextual
   = link_to 'Записать показания',
-            new_counter_path(@issue),
+            new_counter_path,
             class: %i[icon icon-add]
+
+  - if counter
+    = link_to 'Изменить показания',
+              edit_counter_path(counter),
+              class: %i[icon icon-edit]

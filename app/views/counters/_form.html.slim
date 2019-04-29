@@ -1,0 +1,9 @@
+/ locals: {f: form_builder}
+
+= error_messages_for f.object
+
+.box.tabular
+  p
+    = f.text_field :value
+  p
+    = f.date_field :to

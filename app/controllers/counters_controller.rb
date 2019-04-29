@@ -35,6 +35,21 @@ class CountersController < ApplicationController
     render locals: {counter: counter}
   end
 
+  def edit
+    counter = Counter.find(params[:id])
+    render locals: {counter: counter}
+  end
+
+  def update
+    counter = Counter.find(params[:id])
+    if !counter.update(params_counter)
+      render :edit,
+             locals: {counter: counter}
+    else
+      redirect_to counter_path(counter)
+    end
+  end
+
   private
 
   def params_counter
