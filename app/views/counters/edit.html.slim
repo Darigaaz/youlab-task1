@@ -1,7 +1,7 @@
 = labelled_form_for counter,
                     url: counter_path(counter),
-                    html: {multipart: true} do |f|
+                    html: {multipart: true} do |form|
   = render partial: 'form',
-           locals: {f: f}
+           locals: {form: form}
 
   = submit_tag l(:button_save)

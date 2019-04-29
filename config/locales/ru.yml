@@ -1,0 +1,10 @@
+ru:
+  activerecord:
+    models:
+      counter:
+        one: Счетчик
+        many: Счетчики
+    attributes:
+      counter:
+        to: Число
+        value: Значение

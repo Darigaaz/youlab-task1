@@ -1,9 +1,9 @@
 / locals: {f: form_builder}
 
-= error_messages_for f.object
+= error_messages_for form.object
 
 .box.tabular
   p
-    = f.text_field :value
+    = form.text_field :value
   p
-    = f.date_field :to
+    = form.date_field :to

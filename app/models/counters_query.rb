@@ -12,7 +12,7 @@ class CountersQuery < Query
                     caption: 'Число'),
     QueryColumn.new(:value,
                     sortable: %Q(#{Counter.quoted_table_name}."value"),
-                    caption: 'Значение')
+                    caption: Counter.human_attribute_name(:value))
   ]
 
   def initialize_available_filters
