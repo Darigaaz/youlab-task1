@@ -20,21 +20,18 @@ class CountersQuery < Query
                          type: :list,
                          name: 'ID',
                          values: lambda {
-                           Counter.all.map { |counter| [counter.id, counter.id.to_s] }
+                           Counter.all.pluck(:id).map{ |id| [id, id.to_s] }
                          }
 
     add_available_filter 'to',
                          type: :date,
-                         name: 'Число',
-                         values: lambda {
-                           Counter.all.map { |counter| [counter.to, counter.id.to_s] }
-                         }
+                         name: 'Число'
 
     add_available_filter 'value',
                          type: :list,
                          name: 'Значение',
                          values: lambda {
-                           Counter.all.map { |counter| [counter.value, counter.id.to_s] }
+                           Counter.all.distinct.pluck(:value).map { |val| [val, val.to_s] }
                          }
   end
 
@@ -54,5 +51,9 @@ class CountersQuery < Query
 
   def default_columns_names
     %i[id to value]
+  end
+
+  def sql_for_to_field(field, operator, value, **_options)
+    sql_for_field(field, operator, value, Counter.quoted_table_name, %("to"))
   end
 end
